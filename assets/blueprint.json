@@ -1,0 +1,40 @@
+{
+    "landingPage": "\/wp-admin\/options-general.php?page=course_booking_system",
+    "preferredVersions": {
+        "php": "8.3",
+        "wp": "6.4.2"
+    },
+    "phpExtensionBundles": [
+        "kitchen-sink"
+    ],
+    "steps": [
+        {
+            "step": "login",
+            "username": "admin",
+            "password": "password"
+        },
+        {
+            "step": "installPlugin",
+            "pluginZipFile": {
+                "resource": "wordpress.org\/plugins",
+                "slug": "woocommerce"
+            },
+            "options": {
+                "activate": true
+            }
+        },
+        {
+            "step": "setSiteOptions",
+            "options": {
+                "woocommerce_file_download_method": "xsendfile",
+                "woocommerce_downloads_require_login": "yes",
+                "woocommerce_enable_guest_checkout": "no",
+                "woocommerce_enable_checkout_login_reminder": "yes"
+            }
+        },
+        {
+            "step": "runPHP",
+            "code": "<?php\ninclude 'wordpress/wp-load.php';\nwp_insert_post(array(\n'import_id' => 5,\n'post_type' => 'course',\n'post_title' => 'Example Post',\n'post_content' => '<!-- wp:paragraph -->\n<p>a normal paragraph</p>\n<!-- \/wp:paragraph -->',\n'post_status' => 'publish',\n'post_author' => 1\n));"
+        }
+    ]
+}
